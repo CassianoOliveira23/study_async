@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Categoria, Flashcard
+from .models import Categoria, Flashcard, Desafio, FlashcardDesafio
 from django.http import HttpResponse
 from django.contrib.messages import constants
 from django.contrib import messages
-from django.contrib.messages import constants as messages_constants
+
+
+
 
 # Create your views here.
 
@@ -53,38 +55,45 @@ def novo_flashcard(request):
 
 
 
-'''def deletar_flashcard(request, id):
-    
+def deletar_flashcard(request, id):
+    #fazer validação de segurança
     flashcard = Flashcard.objects.get(id=id)
     flashcard.delete()
     messages.add_message(
         request, constants.SUCCESS, 'Flashcard deletado com sucesso!'
     )
-    return redirect('/flashcard/novo_flashcard/')'''
-
-
-
-def deletar_flashcard(request, id):
-    if not request.user.is_authenticated:
-        messages.add_message(
-            request, messages_constants.ERROR, 'Você precisa estar logado para excluir um flashcard.'
-        )
-        return redirect('/usuarios/logar') 
-    flashcard = get_object_or_404(Flashcard, id=id)
-    
-    
-    if request.user != flashcard.user:
-        messages.add_message(
-            request, messages_constants.ERROR, 'Você não tem permissão para excluir este flashcard.'
-        )
-        return redirect('/flashcard/novo_flashcard/') 
-    flashcard.delete()
-    
-    messages.add_message(
-        request, messages_constants.SUCCESS, 'Flashcard deletado com sucesso!'
-    )
     return redirect('/flashcard/novo_flashcard/')
 
 
+def iniciar_desafio(request):
+    if request.method == "GET":
+        categorias = Categoria.objects.all()
+        dificuldades = Flashcard.DIFICULDADE_CHOICES
+        return render(request, 'iniciar_desafio.html', {'categorias': categorias, 'dificuldades': dificuldades})
+    
+    elif request.method == "POST":
+        titulo = request.POST.get('titulo')
+        categorias = request.POST.getlist('categoria')
+        dificuldade = request.POST.get('dificuldade')
+        qtd_perguntas = request.POST.get('qtd_perguntas')
+        
+        desafio = Desafio(
+            user = request.user,
+            quantidade_perguntas = qtd_perguntas,
+            dificuldade = dificuldade
+        )
+        
+        desafio.save()
+        
+        for categoria in categorias:
+            desafio.categoria.add(categoria)
 
+        flashcard = (
+            Flashcard.objects.filter(user = request.user)
+            .filter(dificuldade = dificuldade)
+            .filter(categoria_id__in = categorias)
+            .order_by('?')
+            )
+        print(flashcard)
 
+        return HttpResponse ('Teste')
