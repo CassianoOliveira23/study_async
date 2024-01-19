@@ -35,7 +35,8 @@
                             <div class="circle c3"></div>
                         </div>
                         <br>
-                        <h3>Cadastre-se</h3>
+                        <h3>Login</h3>
+                        
                         {% if messages %}
                             {% for message in messages %}
                                 <section class="alert {{message.tags}}">
@@ -43,6 +44,7 @@
                                 </section>
                             {% endfor %}
                         {% endif %}
+
                         <form action="{% url 'login' %}" method="POST">{% csrf_token %}
                             <label>Username</label>
                             <input type="text" class="input-form rounded" name="username" id="">
