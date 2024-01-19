@@ -18,6 +18,15 @@ class Flashcard(models.Model):
 
     def __str__(self):
         return self.pergunta
+    
+    @property
+    def css_dificuldade(self):
+        if self.dificuldade =="F":
+            return  "flashcard-facil"
+        elif self.dificuldade == "M":
+            return  "flashcard-medio"
+        elif self.dificuldade == "D":
+            return "flashcard-dificil"
    
    
         
@@ -39,5 +48,6 @@ class Desafio(models.Model):
     max_length=1, choices=Flashcard.DIFICULDADE_CHOICES
     )
     flashcards = models.ManyToManyField(FlashcardDesafio)
+    
     def __str__(self):
         return self.titulo
