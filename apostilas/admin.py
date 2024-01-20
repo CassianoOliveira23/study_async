@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Apostila
+from .models import Apostila, ViewApostila
 
-admin.site.register(Apostila)
-# Register your models here.
+admin.site.register(ViewApostila)
+

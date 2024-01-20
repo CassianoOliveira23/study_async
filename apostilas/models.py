@@ -9,3 +9,10 @@ class Apostila(models.Model):
     
     def __str__(self):
         return self.titulo
+    
+class ViewApostila(models.Model):
+    ip = models.GenericIPAddressField()
+    apostila = models.ForeignKey(Apostila, on_delete=models.DO_NOTHING)
+    
+    def __srt__(self) -> str:
+        return self.ip
