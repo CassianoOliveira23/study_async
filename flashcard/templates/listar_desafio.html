@@ -18,7 +18,7 @@
         <br>
         <div class="row">
             <div class="col-md ">
-                <form action="}" method="GET">
+                <form action="{% url 'listar_desafio' %}" method="GET">
                 <label for="">Categoria</label>
                 <select name="categoria" class="form-select">
                     {% for categoria in categorias %}

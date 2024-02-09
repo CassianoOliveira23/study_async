@@ -47,7 +47,7 @@ class Desafio(models.Model):
     categoria = models.ManyToManyField(Categoria)
     quantidade_perguntas = models.IntegerField()
     dificuldade = models.CharField(
-    max_length=1, choices=Flashcard.DIFICULDADE_CHOICES
+        max_length=1, choices=Flashcard.DIFICULDADE_CHOICES
     )
     flashcards = models.ManyToManyField(FlashcardDesafio)
     
@@ -56,6 +56,6 @@ class Desafio(models.Model):
     
     def status(self):
         if self.flashcards.filter(respondido=False).exists():
-            return mark_safe('<span class="bagde bg-primary">Em aberto</span>')
+            return mark_safe('<span class="badge bg-primary">Em aberto</span>')
         else:
-            return mark_safe('<span class="bagde bg-primary">Concluido</span>')
+            return mark_safe('<span class="badge bg-primary">Concluido</span>')

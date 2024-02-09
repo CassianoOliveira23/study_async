@@ -20,6 +20,7 @@ def adicionar_apostilas(request):
             arquivo=arquivo
         )
         apostila.save()
+        
         messages.add_message(request, constants.SUCCESS, 'Salvo com Sucesso')
         return redirect('/apostilas/adicionar_apostilas')
         
