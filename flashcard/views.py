@@ -6,9 +6,6 @@ from django.contrib import messages
 
 
 
-
-# Create your views here.
-
 def novo_flashcard(request):
     if not request.user.is_authenticated:
         return redirect('/usuarios/logar')
@@ -40,7 +37,6 @@ def novo_flashcard(request):
             return redirect('/flashcard/novo_flashcard')
         
         
-        
         flashcard = Flashcard(
             user = request.user,
             pergunta = pergunta,
@@ -48,7 +44,7 @@ def novo_flashcard(request):
             categoria_id = categoria,
             dificuldade = dificuldade,
         )
-        flashcard.save(),
+        flashcard.save()
         
         messages.add_message(request, constants.SUCCESS, "Flashcard Cadastrado com sucesso")
         return redirect('/flashcard/novo_flashcard')

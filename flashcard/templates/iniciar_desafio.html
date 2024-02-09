@@ -28,9 +28,7 @@
                 <label>Categoria</label>
                 <select name="categoria" class="form-select" multiple>
                     {% for categoria in categorias %}
-                        <option value="{{categoria.id}}">
-                        {{categoria.nome}}
-                        </option>
+                        <option value="{{categoria.id}}">{{categoria.nome}}</option>
                     {% endfor %}
                 </select>
             </div>
